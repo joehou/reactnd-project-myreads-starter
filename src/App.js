@@ -1,6 +1,8 @@
 import React from 'react'
+import {Route, Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookShelf from './BookShelf'
+import SearchBooks from './SearchBooks'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -24,44 +26,31 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author"/>
+          <Route path="/search" component={SearchBooks} />
+          <Route exact path="/" render={()=> (
+              <div className="list-books">
+                <div className="list-books-title">
+                  <h1>MyReads</h1>
+                </div>
+                <div className="list-books-content">
+                  <div>
+                    <BookShelf shelfName="Currently Reading"
+                        books={this.state.books.filter( b => b.shelf ==="currentlyReading" )}
+                    />
+                    <BookShelf shelfName="Want To Read"
+                        books={this.state.books.filter( b => b.shelf ==="wantToRead" )}
+                    />
+                    <BookShelf shelfName="Read"
+                        books={this.state.books.filter( b => b.shelf ==="read" )}
+                    />
+                  </div>
+                </div>
+                <div className="open-search">
+                  <Link to="/search">Add a book</Link>
+                </div>
               </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        ) : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <BookShelf
-                    shelfName="Currently Reading"
-                    books={this.state.books.filter( b => b.shelf ==="currentlyReading" )}
-                />
-                <BookShelf
-                    shelfName="Want To Read"
-                    books={this.state.books.filter( b => b.shelf ==="wantToRead" )}
-                />
-                <BookShelf
-                    shelfName="Read"
-                    books={this.state.books.filter( b => b.shelf ==="read" )}
-                />
-              </div>
-            </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
-          </div>
-        )}
+            )}
+          />
       </div>
     )
   }
