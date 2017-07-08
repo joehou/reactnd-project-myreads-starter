@@ -11,15 +11,13 @@ class SearchBooks extends  Component {
     }
 
     onSearch(value) {
-        this.setState({query:value})
-        this.updateResults()
+        this.setState({query:value},this.updateResults())
     }
 
     updateResults() {
         BooksAPI.search(this.state.query,999).then( books =>{
             this.setState({books:books})
         })
-
     }
 
     render() {
