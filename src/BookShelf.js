@@ -2,7 +2,6 @@ import React,{Component} from 'react'
 
 class BookShelf extends Component {
     render(){
-        const books = this.props.books
         return(
             <div className="bookshelf">
                 {this.props.shelfName &&(
