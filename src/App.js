@@ -23,10 +23,22 @@ class BooksApp extends React.Component {
     })
   }
 
+  updateShelf(book,Shelf){
+        BooksAPI.update(book,Shelf).then(_=>{
+            BooksAPI.getAll().then( books =>{
+                this.setState({books})
+            })
+        })
+  }
+
   render() {
     return (
       <div className="app">
-          <Route path="/search" component={SearchBooks} />
+          <Route path="/search" render={_=>(
+            <SearchBooks
+                onUpdateShelf={this.updateShelf.bind(this)}
+            />
+          )}/>
           <Route exact path="/" render={()=> (
               <div className="list-books">
                 <div className="list-books-title">
@@ -36,12 +48,21 @@ class BooksApp extends React.Component {
                   <div>
                     <BookShelf shelfName="Currently Reading"
                         books={this.state.books.filter( b => b.shelf ==="currentlyReading" )}
+                        onUpdateShelf={(book,shelf)=>{
+                           this.updateShelf(book,shelf)
+                        }}
                     />
                     <BookShelf shelfName="Want To Read"
                         books={this.state.books.filter( b => b.shelf ==="wantToRead" )}
+                        onUpdateShelf={(book,shelf)=>{
+                           this.updateShelf(book,shelf)
+                        }}
                     />
                     <BookShelf shelfName="Read"
                         books={this.state.books.filter( b => b.shelf ==="read" )}
+                        onUpdateShelf={(book,shelf)=>{
+                           this.updateShelf(book,shelf)
+                        }}
                     />
                   </div>
                 </div>

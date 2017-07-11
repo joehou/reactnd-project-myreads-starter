@@ -33,7 +33,9 @@ class SearchBooks extends  Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        <BookShelf books={this.state.books}/>
+                        <BookShelf books={this.state.books}
+                                   onUpdateShelf={this.props.onUpdateShelf.bind(this)}
+                        />
                     </ol>
                 </div>
             </div>
