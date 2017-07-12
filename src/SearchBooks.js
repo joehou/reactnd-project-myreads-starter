@@ -8,6 +8,7 @@ class SearchBooks extends  Component {
     state  = {
         query: '',
         SearchResults: [],
+        currentBooks: this.props.books
     }
 
     onSearch(value) {
@@ -29,7 +30,12 @@ class SearchBooks extends  Component {
         })
     }
 
+    componentDidUpdate() {
+        console.log(this.props.books)
+    }
+
     render() {
+
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -43,7 +49,10 @@ class SearchBooks extends  Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         <BookShelf books={this.state.searchResults}
-                                   onUpdateShelf={this.props.onUpdateShelf.bind(this)}
+                                   onUpdateShelf={(book,shelf)=>{
+                                       this.props.onUpdateShelf(book,shelf)
+                                       this.updateResults(this.state.query)
+                                   }}
                         />
                     </ol>
                 </div>
