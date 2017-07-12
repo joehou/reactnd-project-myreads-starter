@@ -31,7 +31,7 @@ class BookShelf extends Component {
                                         </select>
                                     </div>
                                 </div>
-                                <div className="book-title">{b.title}</div>
+                                <div className="book-title">{b.title} {b.id} {b.shelf}</div>
                                 <div className="book-authors">{b.authors && b.authors[0]}</div>
                             </div>
                         </li>
