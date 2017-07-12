@@ -53,19 +53,7 @@ class SearchBooks extends  Component {
                 <div className="search-books-results">
                     <ol className="books-grid">
                         <BookShelf books={this.state.searchResults}
-                                   onUpdateShelf={(book,shelf)=>{
-                                       this.props.onUpdateShelf(book,shelf)
-
-                                       if (searchResults!== undefined && searchResults.length > 0) {
-                                           this.setState({
-                                               searchResults: searchResults.map(bookResult => {
-                                                   let bookMatched = this.props.books.find(book => book.id === bookResult.id)
-                                                   bookResult.shelf = bookMatched ? bookMatched.shelf : 'none'
-                                                   return bookResult
-                                               })
-                                           })
-                                       }
-                                   }}
+                                   onUpdateShelf={(book,shelf)=>{this.props.onUpdateShelf(book,shelf)}}
                         />
                     </ol>
                 </div>
