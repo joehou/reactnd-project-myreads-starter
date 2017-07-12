@@ -7,8 +7,7 @@ import BookShelf from './BookShelf'
 class SearchBooks extends  Component {
     state  = {
         query: '',
-        SearchResults: [],
-        currentBooks: this.props.books
+        SearchResults: []
     }
 
     onSearch(value) {
@@ -30,12 +29,17 @@ class SearchBooks extends  Component {
         })
     }
 
-    componentDidUpdate() {
-        console.log(this.props.books)
-    }
 
     render() {
-
+        let searchResults = this.state.searchResults
+        if (this.state.searchResults !== undefined ) {
+                    searchResults.map(bookResult => {
+                        let bookMatched = this.props.books.find(book => book.id === bookResult.id)
+                        bookResult.shelf = bookMatched ? bookMatched.shelf : 'none'
+                        return bookResult;
+                    }
+            )
+        }
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -51,7 +55,16 @@ class SearchBooks extends  Component {
                         <BookShelf books={this.state.searchResults}
                                    onUpdateShelf={(book,shelf)=>{
                                        this.props.onUpdateShelf(book,shelf)
-                                       this.updateResults(this.state.query)
+
+                                       if (searchResults!== undefined && searchResults.length > 0) {
+                                           this.setState({
+                                               searchResults: searchResults.map(bookResult => {
+                                                   let bookMatched = this.props.books.find(book => book.id === bookResult.id)
+                                                   bookResult.shelf = bookMatched ? bookMatched.shelf : 'none'
+                                                   return bookResult
+                                               })
+                                           })
+                                       }
                                    }}
                         />
                     </ol>
