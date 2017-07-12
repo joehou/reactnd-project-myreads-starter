@@ -7,16 +7,24 @@ import BookShelf from './BookShelf'
 class SearchBooks extends  Component {
     state  = {
         query: '',
-        books: []
+        SearchResults: [],
     }
 
     onSearch(value) {
-        this.setState({query:value},this.updateResults())
+        if (value !== '')
+            this.setState({query:value},this.updateResults(value))
     }
 
-    updateResults() {
-        BooksAPI.search(this.state.query,999).then( books =>{
-            this.setState({books:books})
+    updateResults(value) {
+        BooksAPI.search(value,999).then( books => {
+            if (books !== undefined && books.length > 0) {
+                this.setState({
+                    searchResults: books.map(book =>{
+                        book.shelf = 'none'
+                        return book
+                    })
+                })
+            }
         })
     }
 
@@ -33,7 +41,7 @@ class SearchBooks extends  Component {
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        <BookShelf books={this.state.books}
+                        <BookShelf books={this.state.searchResults}
                                    onUpdateShelf={this.props.onUpdateShelf.bind(this)}
                         />
                     </ol>
