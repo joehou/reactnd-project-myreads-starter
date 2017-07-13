@@ -17,7 +17,7 @@ class SearchBooks extends  Component {
 
     updateResults(value) {
         BooksAPI.search(value,999).then( books => {
-            if (books !== undefined && books.length > 0) {
+                console.log(books)
                 this.setState({searchResults:
                     books.map(bookResult =>{
                         let bookMatched = this.props.books.find( book => book.id===bookResult.id)
@@ -25,8 +25,7 @@ class SearchBooks extends  Component {
                         return bookResult
                     })
                 })
-            }
-        })
+        }).catch(_=> this.setState({searchResults: []}))
     }
 
 
