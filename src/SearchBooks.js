@@ -5,9 +5,10 @@ import BookShelf from './BookShelf'
 
 
 class SearchBooks extends  Component {
+
     state  = {
         query: '',
-        SearchResults: []
+        searchResults: []
     }
 
     onSearch(value) {
@@ -17,7 +18,6 @@ class SearchBooks extends  Component {
 
     updateResults(value) {
         BooksAPI.search(value,999).then( books => {
-                console.log(books)
                 this.setState({searchResults:
                     books.map(bookResult =>{
                         let bookMatched = this.props.books.find( book => book.id===bookResult.id)

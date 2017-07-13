@@ -6,6 +6,7 @@ class BookShelf extends Component {
 
     render(){
         const { onUpdateShelf} = this.props;
+
         return(
             <div className="bookshelf">
                 {this.props.shelfName &&(
@@ -16,7 +17,7 @@ class BookShelf extends Component {
                 }
                 <div className="bookshelf-books">
                     <ol className="books-grid">
-                        {(this.props.books !== undefined && this.props.books.length > 0) ? (this.props.books.map(b=>
+                        {(this.props.books.length > 0) ? (this.props.books.map(b=>
                         <li key={b.id} >
                             <div className="book">
                                 <div className="book-top">
